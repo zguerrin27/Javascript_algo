@@ -161,6 +161,44 @@ function reverse(s){
 
 
 // let sentence = "one|twotwo/three:four"  // four|three/twotwo:one
-let sentence = "|zach/steve:chris|jon"     // |jon/chris:steve|zach
+let sentence = "|brian/steve:chris|jon"     // |jon/chris:steve|brian
 
 console.log(reverse(sentence))
+
+
+
+
+function reverseWordOrderSameSeparatorOrder(str) {
+  const reverseWordList = (str.match(/\w+/g) || []).reverse();
+  const separatorList = (str.match(/\W+/g) || []);
+
+  const initialValue =
+    str.startsWith(separatorList[0])
+    ? separatorList.shift()
+    : '';
+
+  return reverseWordList.reduce((value, word) =>
+    [value, word, separatorList.shift()].join(''),
+    initialValue
+  );
+}
+console.log("decompose ...'one|twotwo/three:four'... into...");
+console.log('one|twotwo/three:four'.match(/\w+/g).reverse());
+console.log('one|twotwo/three:four'.match(/\W+/g));
+
+console.log(`
+  (reverseWordOrderSameSeparatorOrder(
+    'one|twotwo/three:four'
+  ) === 'four|three/twotwo:one') ?`,
+  (reverseWordOrderSameSeparatorOrder(
+    'one|twotwo/three:four'
+  ) === 'four|three/twotwo:one')
+);
+console.log(`
+  (reverseWordOrderSameSeparatorOrder(
+    '|brian/steve:chris|jon'
+  ) === '|jon/chris:steve|brian') ?`,
+  (reverseWordOrderSameSeparatorOrder(
+    '|brian/steve:chris|jon'
+  ) === '|jon/chris:steve|brian')
+);
