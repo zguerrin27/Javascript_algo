@@ -65,7 +65,7 @@ const reverseInPlace = (s) => {
   console.log("s", s)
   console.log("==========================")
 
-  return reverseInPlace(s.substr(hIndex)) + reverseInPlace(s.substr(0, hIndex)); 
+  return reverseInPlace(s.substr(hIndex)) + reverseInPlace(s.substr(0, hIndex)); // breaks halfs into halfs into halfs..untill less than two...then adds them all together
 
 }
 
@@ -79,9 +79,13 @@ console.log(reverseInPlace(sent))
 
 var stringIn = 'My! name.is@rin';
 var rev = stringIn.replace(/[a-z]+/gi, function(s){return s.split('').reverse().join('')});
-document.write(rev); // yM! eman.si@nir
+console.log(rev); // yM! eman.si@nir
 
 
+
+
+// reverses complete order of string for everything but non-letter characters
+//let sentence = "My! name.is@rin"  --> "ni! rsie.ma@nyM"
 
 
 let check=(str)=>{
@@ -113,3 +117,50 @@ let r=(str)=>{
 return arr.join('');
 }
 
+//Given a sentence with a set of delimiters, reverse the order of the words in the sentence and keep the delimiters in place. 
+
+
+let isAlpha = (char) => {
+  let pat = /[a-zA-z]/igm;     // match any alphabetic character
+  if(char.match(pat)){
+      return true
+  } else {
+      return false
+  }
+}
+
+function reverse(s){
+  
+  let specialArr = []   
+
+  for(ltr of s){ 
+    if(!isAlpha(ltr)){                        // pull out all special characters in order
+      specialArr.push(ltr)
+    } 
+  }
+  
+  let regCharArr = s.split(/[^a-z]/ig).reverse()     // use split to pull out all words separated by non alpha characters. then reverse
+  
+  let result = []                                    // init result array
+  
+  if(isAlpha(s[0])){
+    result = regCharArr.flatMap((val, idx) => [val, specialArr[idx]])   //use flatmap to combine the two arrays...if origin array starts with letter, combine special array into reg array
+  }
+  
+  if(!isAlpha(s[0])){
+    result = specialArr.flatMap((val, idx) => [val, regCharArr[idx]])    // vice versa
+  }
+
+  for(let i = 0; i < result.length; i++){         // remove any undefineds
+    if(result[i] === undefined){
+      result.splice(i, 1)
+    }
+  }
+  return result.join('')
+}
+
+
+// let sentence = "one|twotwo/three:four"  // four|three/twotwo:one
+let sentence = "|zach/steve:chris|jon"     // |jon/chris:steve|zach
+
+console.log(reverse(sentence))
