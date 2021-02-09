@@ -23,7 +23,7 @@ let sentence = "the other day I went    to the mall"  //  "mall the to went I da
 
 console.log(reverse(sentence))
 
-
+//==================================================================================================================
 
 // this completly reverses string...not just word order 
 function reverse(str) {
@@ -45,7 +45,7 @@ let sentence = "the other day I went      to the mall"    // "llam eht ot tnew I
 console.log(reverse(sentence))
 
 
-
+//==================================================================================================================
 
 /// this completly reverses string in place using substring. idea is merge sort
 
@@ -72,7 +72,7 @@ const reverseInPlace = (s) => {
 let sent = "the other day"
 
 console.log(reverseInPlace(sent))
-
+//==================================================================================================================
 
 
 // this reverses every letter other than special characters
@@ -82,7 +82,7 @@ var rev = stringIn.replace(/[a-z]+/gi, function(s){return s.split('').reverse().
 console.log(rev); // yM! eman.si@nir
 
 
-
+//==================================================================================================================
 
 // reverses complete order of string for everything but non-letter characters
 //let sentence = "My! name.is@rin"  --> "ni! rsie.ma@nyM"
@@ -117,11 +117,13 @@ let r=(str)=>{
 return arr.join('');
 }
 
-//Given a sentence with a set of delimiters, reverse the order of the words in the sentence and keep the delimiters in place. 
+//==================================================================================================================
 
+//Given a sentence with a set of delimiters, reverse the order of the words in the sentence and keep the delimiters in place. 
+//doesnt work on spaces...the isAlpha needs to be better. 
 
 let isAlpha = (char) => {
-  let pat = /[a-zA-z]/igm;     // match any alphabetic character
+  let pat = /\w+/g;     // match any alphabetic character
   if(char.match(pat)){
       return true
   } else {
@@ -165,7 +167,7 @@ let sentence = "|brian/steve:chris|jon"     // |jon/chris:steve|brian
 
 console.log(reverse(sentence))
 
-
+//==================================================================================================================
 
 
 function reverseWordOrderSameSeparatorOrder(str) {
@@ -186,19 +188,6 @@ console.log("decompose ...'one|twotwo/three:four'... into...");
 console.log('one|twotwo/three:four'.match(/\w+/g).reverse());
 console.log('one|twotwo/three:four'.match(/\W+/g));
 
-console.log(`
-  (reverseWordOrderSameSeparatorOrder(
-    'one|twotwo/three:four'
-  ) === 'four|three/twotwo:one') ?`,
-  (reverseWordOrderSameSeparatorOrder(
-    'one|twotwo/three:four'
-  ) === 'four|three/twotwo:one')
-);
-console.log(`
-  (reverseWordOrderSameSeparatorOrder(
-    '|brian/steve:chris|jon'
-  ) === '|jon/chris:steve|brian') ?`,
-  (reverseWordOrderSameSeparatorOrder(
-    '|brian/steve:chris|jon'
-  ) === '|jon/chris:steve|brian')
-);
+let sentence = "#one |twotwo/three:four"  // "#four |three/twotwo:one"
+
+console.log(reverseWordOrderSameSeparatorOrder(sentence))
