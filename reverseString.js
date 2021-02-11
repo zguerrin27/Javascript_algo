@@ -23,7 +23,7 @@ let sentence = "the other day I went    to the mall"  //  "mall the to went I da
 
 console.log(reverse(sentence))
 
-//==================================================================================================================
+
 
 // this completly reverses string...not just word order 
 function reverse(str) {
@@ -45,7 +45,7 @@ let sentence = "the other day I went      to the mall"    // "llam eht ot tnew I
 console.log(reverse(sentence))
 
 
-//==================================================================================================================
+
 
 /// this completly reverses string in place using substring. idea is merge sort
 
@@ -59,11 +59,11 @@ const reverseInPlace = (s) => {
   var hIndex = Math.ceil(s.length / 2); 
 
 
-  console.log("hIndex", hIndex)
-  console.log("sub-string starting at hindex", s.substr(hIndex))
-  console.log("sub-string w/ 0 to hindex", s.substr(0, hIndex))
-  console.log("s", s)
-  console.log("==========================")
+  // console.log("hIndex", hIndex)
+  // console.log("sub-string starting at hindex", s.substr(hIndex))
+  // console.log("sub-string w/ 0 to hindex", s.substr(0, hIndex))
+  // console.log("s", s)
+  // console.log("==========================")
 
   return reverseInPlace(s.substr(hIndex)) + reverseInPlace(s.substr(0, hIndex)); // breaks halfs into halfs into halfs..untill less than two...then adds them all together
 
