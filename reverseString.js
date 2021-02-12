@@ -191,3 +191,42 @@ console.log('one|twotwo/three:four'.match(/\W+/g));
 let sentence = "#one |twotwo/three:four"  // "#four |three/twotwo:one"
 
 console.log(reverseWordOrderSameSeparatorOrder(sentence))
+
+
+
+// ===========================
+
+// This function reverses the word, but keeps it place in the string. 
+
+
+const reverseInPlace = (s) => {
+  
+  let splitS = s.split('')
+  let left = 0, right = 1;
+
+  while(right < splitS.length) {
+    right = left + 1;
+    while(splitS[right] !== ' ' && right < splitS.length) {
+      right++;
+    }
+    
+    reverseWord(splitS, left, right-1);
+    left = right + 1;
+  }
+
+  return splitS.join('')
+}
+
+ function reverseWord(splitS, left, right) {
+    while(left <= right) {
+      let temp = splitS[left];
+      splitS[left] = splitS[right];
+      splitS[right] = temp;
+      left++; right--;
+    }
+  }
+
+
+let sent = "mohan is great"    // "nahom si taerg"
+
+console.log(reverseInPlace(sent))
