@@ -174,10 +174,7 @@ function reverseWordOrderSameSeparatorOrder(str) {
   const reverseWordList = (str.match(/\w+/g) || []).reverse();
   const separatorList = (str.match(/\W+/g) || []);
 
-  const initialValue =
-    str.startsWith(separatorList[0])
-    ? separatorList.shift()
-    : '';
+  const initialValue = str.startsWith(separatorList[0]) ? separatorList.shift() : '';
 
   return reverseWordList.reduce((value, word) =>
     [value, word, separatorList.shift()].join(''),
@@ -191,6 +188,32 @@ console.log('one|twotwo/three:four'.match(/\W+/g));
 let sentence = "#one |twotwo/three:four"  // "#four |three/twotwo:one"
 
 console.log(reverseWordOrderSameSeparatorOrder(sentence))
+
+
+//=======================================
+
+const reverse = str => {
+  let s = str.replace(/\s+/g, '')
+  let specialChars = s.match(/\W+/g)
+  let words = s.match(/\w+/g).reverse()
+  let result = []
+  
+  let initVal = s[0]
+
+  
+  if(initVal.match(/\W+/g)){
+    result = specialChars.flatMap( (val, idx) => [val, words[idx]])
+  } else {
+    result = words.flatMap((val, idx) => [val, specialChars[idx]])
+  }
+  
+ return result.join('')
+}
+
+
+let sent = " The  |other:day(we]went"  //"went|we:day(other]The"
+
+console.log(reverse(sent))
 
 
 
