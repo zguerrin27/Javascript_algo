@@ -100,6 +100,61 @@ Object.flatten = function(data) {
   return result;
 }
 
+
+// =========================================
+
+var new_json = [{
+  "name": "fatima",
+  "age": 25,
+  "neighbour": {
+    "name": "taqi",
+    "location": "end of the street",
+    "property": {
+      "built in": 1990,
+      "owned": false,
+      "years on market": [1990, 1998, 2002, 2013],
+      "year short listed": [], //means never
+    }
+  },
+  "town": "Mountain View",
+  "state": "CA"
+},
+{
+  "name": "qianru",
+  "age": 20,
+  "neighbour": {
+    "name": "joe",
+    "location": "opposite to the park",
+    "property": {
+      "built in": 2011,
+      "owned": true,
+      "years on market": [1996, 2011],
+      "year short listed": [], //means never
+    }
+  },
+  "town": "Pittsburgh",
+  "state": "PA"
+}]
+
+
+
+const flatten = (source, parentPath, result = {} ) => {
+  for(key in source){
+    let value = source[key]
+    let path = parentPath ? `${parentPath}.${key}` : key
+    if(typeof value === 'object' && value != ''){
+      flatten(value, path, result)
+    } else {   
+      result[path] = value == '' ? 'Never' : source[key]
+    }
+  }
+  return result
+}
+
+console.log(flatten(new_json))
+
+// ===============================
+
 // balanced brackets.                                    done
 // balanced brackets variations 
 // reverse string                                        done

@@ -194,24 +194,22 @@ console.log(reverseWordOrderSameSeparatorOrder(sentence))
 
 const reverse = str => {
   let s = str.replace(/\s+/g, '')
-  let specialChars = s.match(/\W+/g)
   let words = s.match(/\w+/g).reverse()
+  let delimeters = s.match(/\W+/g)
+  let initVal = s[0]
   let result = []
   
-  let initVal = s[0]
-
-  
-  if(initVal.match(/\W+/g)){
-    result = specialChars.flatMap( (val, idx) => [val, words[idx]])
+  if(initVal.match(/\w+/g)){
+    result = words.flatMap((val, idx) => [val, delimeters[idx]])
   } else {
-    result = words.flatMap((val, idx) => [val, specialChars[idx]])
+    result = delimeters.flatMap((val, idx) => [val, delimeters[idx]])
   }
   
- return result.join('')
+  return result.join('')
 }
 
 
-let sent = " The  |other:day(we]went"  //"went|we:day(other]The"
+let sent = " The  |other:day(we]went"
 
 console.log(reverse(sent))
 
