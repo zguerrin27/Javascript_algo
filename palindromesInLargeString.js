@@ -1,4 +1,4 @@
-// return number of palindrome substrings in a large string
+// return number of palindrome word substrings in a large string
 // ignore  any smaller palindromes inside a larger pal
 
 // there are even and odd length pals
@@ -6,6 +6,7 @@
 // odd has ..ABA.. in the middle 
 // in example below.. the BAB within ABABA should not be returned, but the BAB towards the end should 
 // also both of the ABAs within ABABA should not be returned, but the ABA at the end should 
+// a palindrome word is two or more characters.. so "A" is not viewed as Palindrome
 
 
 // let sent = 'kjABABAtCGHHGCinAAokBABuABA' 
@@ -19,10 +20,9 @@ function returnSubStringCount(s){
   let p1 = 0
   let p2 = 1
   let p3 = 2
-  let pals = []
-  // add base case check for 1,2,3 length starting string. 
+  let pals = [] 
   
-  while(p3 < s.length){
+  while(p2 < s.length){  // p2 to handle if the last two chars make a pal
 
     if(s[p1] === s[p3]){
         let oddPal = buildPalindrome(s, p1, p3)    // build full length pal
@@ -44,7 +44,7 @@ function returnSubStringCount(s){
       p3++
     }
   }
-  return pals
+  return pals.length > 0 ? pals : "No Palindrome Words Found"
 }
 
 // the ..AA.. OR ..ABA.. palindrome pattern was found...expand pointers to find total size of palindrome. Return pal string and indexs
@@ -106,7 +106,19 @@ function addToList(pals, palToAdd){
   }
 }
 
+// test cases
 
-let sentence = "kjABABAtCGHHGCinAAokBABuABA"
-console.log(returnSubStringCount(sentence))  // currently returns array of objects. Each is palindrome string and indexs. This could just return the count, or an array of strings etc. 
+let sentence = "kjABABAtCGHHGCinAAokBABuABA" // "ABABA", "CGHHGC", "AA", "BAB", "ABA"
+// let sentence = "ABABABA"                     // "ABABABA"
+// let sentence = "ATFHDYENJSIKELOPMNCBDHTE"    // "No Palindrome Words Found"
+// let sentence = "ATFHDYENJSIKELOPMNCBDHTEAA"  // "AA"
+// let sentence = "AATFHDYENJSIKELOPMNCBDHTEA"  // "AA"
+// let sentence = "A"                           // "No Palindrome Words Found"  
+// let sentence = "AA"                          // "AA" 
+// let sentence = "AB"                          // "No Palindrome Words Found"
+// let sentence = "ADT"                         // "No Palindrome Words Found"
+// let sentence = "BBB"                         // "BBB"
+
+
+console.log(returnSubStringCount(sentence))  // currently returns array of objects. Each obj is the palindrome string and indexs. This could just return the count, or an array of strings etc. 
 
