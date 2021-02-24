@@ -1,5 +1,5 @@
-// return number of palindrome substrings in massive string
-// dont count any smaller pal inside a larger pal
+// return number of palindrome substrings in a large string
+// ignore  any smaller palindromes inside a larger pal
 
 // there are even and odd length pals
 // even has ...AA... in the middle 
@@ -15,24 +15,24 @@
 
 
 
-function returnPalSubStrings(s){
+function returnSubStringCount(s){
   let p1 = 0
   let p2 = 1
   let p3 = 2
   let pals = []
-  // add base case for 1,2,3 letter string
+  // add base case check for 1,2,3 length starting string. 
   
   while(p3 < s.length){
 
     if(s[p1] === s[p3]){
-        let oddPal = buildOddPal(s, p1, p3)       // build full length palindrome substring
-        pals = addToList(pals, oddPal)            // add to pals array if this new pal passes checks
-        pals = removeFromList(pals, oddPal)       // run the remove function incase this pal is a larger version of previous pal  
-        p1++                                      
+        let oddPal = buildPalindrome(s, p1, p3)    // build full length pal
+        pals = addToList(pals, oddPal)             // add to pals array if this new pal passes checks
+        pals = removeFromList(pals, oddPal)        // run the remove function incase this pal is a larger version of previous pal
+        p1++
         p2++
         p3++
     } else if(s[p1] === s[p2]){
-        let evenPal = buildEvenPal(s, p1, p2)  
+        let evenPal = buildPalindrome(s, p1, p2)
         pals = addToList(pals, evenPal)
         pals = removeFromList(pals, evenPal)
         p1++
@@ -47,44 +47,26 @@ function returnPalSubStrings(s){
   return pals
 }
 
-// the ..AA.. palindrome pattern was found...expand pointers to find total size of palindrome
-function buildEvenPal(s, p1, p2){
+// the ..AA.. OR ..ABA.. palindrome pattern was found...expand pointers to find total size of palindrome. Return pal string and indexs
+function buildPalindrome(s, index1, index2){
   let pal = '';
-  while(p1 >= 0 && p2 < s.length){
-    if(s[p1] === s[p2]){
-      pal = s.substring(p1, p2+1)
-      p1--
-      p2++
+  while(index1 >= 0 && index2 < s.length){
+    if(s[index1] === s[index2]){
+      pal = s.substring(index1, index2+1)
+      index1--
+      index2++
     } else {
       break
     }
   }
-  return {         // return object with the palindrome string, and the starting/ending indexs
+  return {
     pal: pal,
-    index1: p1+1,
-    index2: p2-1
+    index1: index1+1,
+    index2: index2-1
   }
 }
 
-// the ..ABA.. palindrome pattern was found...expand pointers to find total size of palindrome
-function buildOddPal(s, p1, p3){
-  let pal = '';
-  while(p1 >= 0 && p3 < s.length){
-    if(s[p1] === s[p3]){
-      pal = s.substring(p1, p3+1)
-      p1--
-      p3++
-    } else {
-      break
-    }
-  }
-  return {       // return object with the palindrome string, and the starting/ending indexs
-    pal: pal,
-    index1: p1+1,
-    index2: p3-1
-  }
-}
-
+//logic for making sure we only return the full palindromes and not the sub palindromes unless it is stand alone.
 
 // input string  =     'kjABABAtCGHHGCinAAokBABuABA' 
 // pointers                      123         
@@ -111,8 +93,10 @@ function removeFromList(pals, palToAdd){
   return temp
 }
 
+
 // dont add a new pal to pals array if there is already a pal with a larger index range.
 // ie dont add 4,6 if 3,7 exists
+
 function addToList(pals, palToAdd){
   if(pals.find(pal => pal.index1 <= palToAdd.index1 && pal.index2 >= palToAdd.index2)){
     return pals
@@ -123,5 +107,6 @@ function addToList(pals, palToAdd){
 }
 
 
-let sent = "kjABABAtCGHHGCinAAokBABuABA"
-console.log(returnPalSubStrings(sent))
+let sentence = "kjABABAtCGHHGCinAAokBABuABA"
+console.log(returnSubStringCount(sentence))  // currently returns array of objects. Each is palindrome string and indexs. This could just return the count, or an array of strings etc. 
+
