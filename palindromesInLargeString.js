@@ -20,19 +20,19 @@ function returnPalSubStrings(s){
   let p2 = 1
   let p3 = 2
   let pals = []
-  // could add base case for 1,2 letter string
+  // add base case for 1,2,3 letter string
   
   while(p3 < s.length){
 
     if(s[p1] === s[p3]){
-        let oddPal = buildOddPal(s, p1, p3)   
-        pals = addToList(pals, oddPal)
-        pals = removeFromList(pals, oddPal)
-        p1++
+        let oddPal = buildOddPal(s, p1, p3)       // build full length palindrome substring
+        pals = addToList(pals, oddPal)            // add to pals array if this new pal passes checks
+        pals = removeFromList(pals, oddPal)       // run the remove function incase this pal is a larger version of previous pal  
+        p1++                                      
         p2++
         p3++
     } else if(s[p1] === s[p2]){
-        let evenPal = buildEvenPal(s, p1, p2)
+        let evenPal = buildEvenPal(s, p1, p2)  
         pals = addToList(pals, evenPal)
         pals = removeFromList(pals, evenPal)
         p1++
@@ -47,7 +47,7 @@ function returnPalSubStrings(s){
   return pals
 }
 
-
+// the ..AA.. palindrome pattern was found...expand pointers to find total size of palindrome
 function buildEvenPal(s, p1, p2){
   let pal = '';
   while(p1 >= 0 && p2 < s.length){
@@ -59,14 +59,14 @@ function buildEvenPal(s, p1, p2){
       break
     }
   }
-  return {
+  return {         // return object with the palindrome string, and the starting/ending indexs
     pal: pal,
     index1: p1+1,
     index2: p2-1
   }
 }
 
-
+// the ..ABA.. palindrome pattern was found...expand pointers to find total size of palindrome
 function buildOddPal(s, p1, p3){
   let pal = '';
   while(p1 >= 0 && p3 < s.length){
@@ -78,7 +78,7 @@ function buildOddPal(s, p1, p3){
       break
     }
   }
-  return {
+  return {       // return object with the palindrome string, and the starting/ending indexs
     pal: pal,
     index1: p1+1,
     index2: p3-1
