@@ -155,29 +155,5 @@ console.log(flatten(new_json))
 
 // ===============================
 
-// balanced brackets.                                    done
-// balanced brackets variations 
-// reverse string                                        done
-// reverse order of words in string with extra spaces    done
-// reverse string but not delimiters
-// flatten nested dictionary                             done
-// flatten array                                         done
-// merge two sorted lists
-
-// build linked list 
-// binary tree
-// regular tree
-// stack 
-// queue
-// heap and graph
-// memoize fib
-
-// what is a map
-// hash table 
-// 4 principles of OOP 
-// time complexity 
-
-// You should also review the tradeoffs for common algorithms such as divide and conquer, dynamic programming/memoization, graph traversals, and breadth-first search vs. depth- first search.
-
 
 
