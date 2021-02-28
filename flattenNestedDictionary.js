@@ -31,74 +31,29 @@ const dict = {
   }
 }
 
-const flatten = (source, parentPath = '', target = {}) => {
+// const flatten = (source, parentPath = '', target = {}) => {
 
-for(const key in source){
-  // Construct the necessary pieces of metadata
-  const value = source[key]
-  const path = parentPath ? `${parentPath}.${key}` : key
+// for(const key in source){
+//   // Construct the necessary pieces of metadata
+//   const value = source[key]
+//   const path = parentPath ? `${parentPath}.${key}` : key
   
-  // Either append or dive another level
-  if (typeof value === 'object'){
-    flatten(value, path, target)
-  } else {    
-    target[path] = source[key]
-  }
-}
+//   // Either append or dive another level
+//   if (typeof value === 'object'){
+//     flatten(value, path, target)
+//   } else {    
+//     target[path] = source[key]
+//   }
+// }
 
-return target
-}
+// return target
+// }
 
 // To the outside world, you pass in dict, and you get a new object.
 // No side effects happen, we're all good.
-console.log(flatten(dict))
+// console.log(flatten(dict))
 
 
-
-
-
-Object.unflatten = function(data) {
-  "use strict";
-  if (Object(data) !== data || Array.isArray(data))
-      return data;
-  var regex = /\.?([^.\[\]]+)|\[(\d+)\]/g,
-      resultholder = {};
-  for (var p in data) {
-      var cur = resultholder,
-          prop = "",
-          m;
-      while (m = regex.exec(p)) {
-          cur = cur[prop] || (cur[prop] = (m[2] ? [] : {}));
-          prop = m[2] || m[1];
-      }
-      cur[prop] = data[p];
-  }
-  return resultholder[""] || resultholder;
-};
-
-Object.flatten = function(data) {
-  var result = {};
-  function recurse (cur, prop) {
-      if (Object(cur) !== cur) {
-          result[prop] = cur;
-      } else if (Array.isArray(cur)) {
-           for(var i=0, l=cur.length; i<l; i++)
-               recurse(cur[i], prop + "[" + i + "]");
-          if (l == 0)
-              result[prop] = [];
-      } else {
-          var isEmpty = true;
-          for (var p in cur) {
-              isEmpty = false;
-              recurse(cur[p], prop ? prop+"."+p : p);
-          }
-          if (isEmpty && prop)
-              result[prop] = {};
-      }
-  }
-  recurse(data, "");
-  return result;
-}
 
 
 // =========================================
@@ -138,22 +93,115 @@ var new_json = [{
 
 
 
-const flatten = (source, parentPath, result = {} ) => {
-  for(key in source){
-    let value = source[key]
-    let path = parentPath ? `${parentPath}.${key}` : key
-    if(typeof value === 'object' && value != ''){
-      flatten(value, path, result)
-    } else {   
-      result[path] = value == '' ? 'Never' : source[key]
-    }
-  }
-  return result
-}
+// const flatten = (source, parentPath, result = {} ) => {
+//   for(key in source){
+//     let value = source[key]
+//     let path = parentPath ? `${parentPath}.${key}` : key
+//     if(typeof value === 'object' && value != ''){
+//       flatten(value, path, result)
+//     } else {   
+//       result[path] = value == '' ? 'Never' : source[key]
+//     }
+//   }
+//   return result
+// }
 
-console.log(flatten(new_json))
+// console.log(flatten(new_json))
 
 // ===============================
 
 
+let flatObj = {
+  'Key1': '1',
+  'Key2.a': '2',
+  'Key2.b': '3',
+  'Key2.c.d': '3',
+  'Key2.c.e': '1',
+  'car.revisions.0.miles': '0'
+}
 
+// const dict = {
+//   "Key1" : "1",
+//   "Key2" : {
+//       "a" : "2",
+//       "b" : "3",
+//       "c" : {
+//           "d" : "3",
+//           "e" : "1"
+//       }
+//   }
+// }
+
+
+// function unflatten(data) {
+//   var result = {}
+//   for (const i in data) {
+//     var keys = i.split('.')
+//     keys.reduce((r, e, j) => {
+//       return r[e] || (r[e] = isNaN(Number(keys[j + 1])) ? (keys.length - 1 == j ? data[i] : {}) : [])
+//     }, result)
+//   }
+//   return result
+// }
+
+const unflatten = obj =>
+  Object.keys(obj).reduce((res, k) => {
+    k.split('.').reduce(
+      (acc, e, i, keys) =>
+        acc[e] ||
+        (acc[e] = isNaN(Number(keys[i + 1]))
+          ? keys.length - 1 === i
+            ? obj[k]
+            : {}
+          : []),
+      res
+    );
+    return res;
+  }, {});
+
+// const flatObj = {
+//   "firstName": "John",
+//   "lastName": "Green",
+//   "car.make": "Honda",
+//   "car.model": "Civic",
+//   "car.revisions.0.miles": 10150,
+//   "car.revisions.0.code": "REV01",
+//   "car.revisions.0.changes": "",
+//      "car.revisions.1.miles": 20021,
+//   "car.revisions.1.code": "REV02",
+//   "car.revisions.1.changes.0.type":
+//    "asthetic",
+//   "car.revisions.1.changes.0.desc":
+//   "Left tire cap", "car.revisions.1.changes.1.type":
+//   "mechanic", "car.revisions.1.changes.1.desc":
+//   "Engine pressure regulator",
+//   "visits.0.date": "2015-01-01",
+//   "visits.0.dealer": "DEAL-001",
+//   "visits.1.date": "2015-03-01",
+//   "visits.1.dealer": "DEAL-002"
+// };
+
+// const unflatten = (obj = {}) => {
+//   const result = {};
+//   let temp, substrings, property, i;
+//   for (property in obj) {
+//      substrings = property.split('.');
+//   temp = result;
+//   for (i = 0; i < substrings.length - 1; i++) {
+//      if (!(substrings[i] in temp)) {
+//         if (isFinite(substrings[i + 1])) {
+//             temp[substrings[i]] = [];
+//         }
+//         else {
+//            temp[substrings[i]] = {};
+//         }
+//      }
+//      temp = temp[substrings[i]];
+//   }
+//   temp[substrings[substrings.length - 1]] = obj[property];
+// }
+// return result;
+// }
+
+console.log(JSON.stringify(unflatten(flatObj), undefined, 4));
+// console.log(unflatten(flatObj))
