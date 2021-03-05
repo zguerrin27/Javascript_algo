@@ -44,9 +44,6 @@ class LinkedList{
     }
   }
 
-  
-
-
 }
 
 let list1 = new LinkedList()

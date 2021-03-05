@@ -473,6 +473,19 @@ class Tree{
     }
   }
 
+  bfs(result = []){
+    let root = this.root
+    let queue = [root]
+    while(queue.length > 0){
+      let current = queue.shift()
+      result.push(current)
+      for(const child of current.children){
+        queue.push(child)
+      }
+    }
+    return result
+  }
+
 
   
 }
