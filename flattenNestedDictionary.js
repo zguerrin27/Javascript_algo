@@ -120,17 +120,17 @@ let flatObj = {
   'car.revisions.0.miles': '0'
 }
 
-// const dict = {
-//   "Key1" : "1",
-//   "Key2" : {
-//       "a" : "2",
-//       "b" : "3",
-//       "c" : {
-//           "d" : "3",
-//           "e" : "1"
-//       }
-//   }
-// }
+const dict = {
+  "Key1" : "1",
+  "Key2" : {
+      "a" : "2",
+      "b" : "3",
+      "c" : {
+          "d" : "3",
+          "e" : "1"
+      }
+  }
+}
 
 
 // function unflatten(data) {
@@ -158,6 +158,8 @@ const unflatten = obj =>
     );
     return res;
   }, {});
+
+
 
 // const flatObj = {
 //   "firstName": "John",
